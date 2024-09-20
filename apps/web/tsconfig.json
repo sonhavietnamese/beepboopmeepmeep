@@ -5,14 +5,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".", // Added import alias base URL
+    "paths": {
+      "@/*": ["*"] // Added import alias for the project
+    }
   },
-  "include": [
-    "next-env.d.ts",
-    "next.config.mjs",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["next-env.d.ts", "next.config.mjs", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
