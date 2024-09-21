@@ -1,5 +1,5 @@
 import { Command } from '@colyseus/command'
-import { Planet } from '../rooms/planet'
+import { Planet } from '@/rooms/planet'
 
 export class OnRoomCreateCommand extends Command<
   Planet,

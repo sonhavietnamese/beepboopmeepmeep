@@ -1,7 +1,7 @@
+import { useNetworkStore } from '@/libs/colyseus'
 import { PerspectiveCamera } from '@react-three/drei'
-import { Suspense, useEffect } from 'react'
-import { useBoundStore, useColyseusState } from '@/libs/colyseus-zustand'
 import { AlienRole } from '@repo/shared'
+import { Suspense } from 'react'
 
 const COLORS: Record<AlienRole, string> = {
   WARRIOR: 'red',
@@ -10,9 +10,9 @@ const COLORS: Record<AlienRole, string> = {
 }
 
 export default function Lobby() {
-  // const aliens = useColyseusState((state) => state.aliens)
-  const state = useBoundStore((state) => state.state)
+  const state = useNetworkStore((state) => state.state)
   const aliens = state?.aliens
+
   return (
     <Suspense fallback={null}>
       <PerspectiveCamera makeDefault fov={35} position={[0, 3, 20]} castShadow />

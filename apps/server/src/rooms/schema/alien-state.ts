@@ -15,8 +15,15 @@ export class Vector3 extends Schema {
 }
 
 export class AlienState extends Schema {
+  @type('string') sessionId: string = ''
   @type('string') role: AlienRole = AlienRole.WARRIOR
   @type(Vector3) position = new Vector3()
   @type(Vector3) rotation = new Vector3()
   @type('string') animation: AlienAnimation = AlienAnimation.IDLE
+  @type('boolean') isHost: boolean = false
+
+  constructor(sessionId: string) {
+    super()
+    this.sessionId = sessionId
+  }
 }

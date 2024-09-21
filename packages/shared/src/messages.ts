@@ -1,3 +1,4 @@
 export enum Messages {
-  SWITCH_CLASS = 'switch-class',
+  SWITCH_ROLE = 'switch-role',
+  START_GAME = 'start-game',
 }

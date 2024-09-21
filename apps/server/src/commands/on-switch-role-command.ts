@@ -1,5 +1,5 @@
 import { Command } from '@colyseus/command'
-import { Planet } from '../rooms/planet'
+import { Planet } from '@/rooms/planet'
 import { AlienRole } from '@repo/shared'
 
 export class OnSwitchRoleCommand extends Command<

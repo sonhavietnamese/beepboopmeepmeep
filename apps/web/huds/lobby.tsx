@@ -1,15 +1,20 @@
-import { useColyseusRoom } from '@/libs/colyseus'
-import { useBoundStore } from '@/libs/colyseus-zustand'
+import { useNetworkStore } from '@/libs/colyseus'
 import { AlienRole, Messages } from '@repo/shared'
 
 export default function LobbyHud() {
-  // const room = useColyseusRoom()
-  const room = useBoundStore((state) => state.room)
+  const room = useNetworkStore((state) => state.room)
+  const state = useNetworkStore((state) => state.state)
+
+  const isHost = state?.aliens.get(room?.sessionId)?.isHost
 
   const switchClass = (c: AlienRole) => {
-    room?.send(Messages.SWITCH_CLASS, {
+    room?.send(Messages.SWITCH_ROLE, {
       role: c,
     })
+  }
+
+  const startGame = () => {
+    room?.send(Messages.START_GAME)
   }
 
   return (
@@ -31,6 +36,14 @@ export default function LobbyHud() {
               SUP
             </button>
           </li>
+
+          {isHost && (
+            <li>
+              <button className='w-[200px] h-[40px] bg-green-400' onClick={startGame}>
+                START GAME
+              </button>
+            </li>
+          )}
         </ul>
       </section>
     </main>

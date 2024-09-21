@@ -2,7 +2,7 @@
 
 import { CAMERA_CONFIG } from '@/configs/game'
 import LobbyHud from '@/huds/lobby'
-import { connectToColyseus, disconnectFromColyseus } from '@/libs/colyseus-zustand'
+import { connectToColyseus, disconnectFromColyseus } from '@/libs/colyseus'
 import Lobby from '@/scenes/lobby'
 import { Canvas } from '@react-three/fiber'
 import { useParams } from 'next/navigation'

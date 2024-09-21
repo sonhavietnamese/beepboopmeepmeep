@@ -1,7 +1,7 @@
 import config from '@colyseus/tools'
 import { monitor } from '@colyseus/monitor'
 import { playground } from '@colyseus/playground'
-import { Planet } from './rooms/planet'
+import { Planet } from '@/rooms/planet'
 
 export default config({
   initializeGameServer: (gameServer) => {
