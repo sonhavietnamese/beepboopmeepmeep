@@ -1,36 +1,40 @@
 import { Schema } from '@colyseus/schema'
 import { Client, type Room } from 'colyseus.js'
 import { useSyncExternalStore } from 'react'
+import { createStore } from 'zustand/vanilla' // Add Zustand import
 import { PlanetState } from '../../server/src/rooms/schema/planet-state'
+import { useStore } from 'zustand'
 
-function store<T>(value: T) {
-  let state = value
-
-  const subscribers = new Set<(value: T) => void>()
-
-  const get = () => state
-  const set = (value: T) => {
-    state = value
-    subscribers.forEach((callback) => callback(value))
-  }
-  const subscribe = (callback: (value: T | undefined) => void) => {
-    subscribers.add(callback)
-    return () => subscribers.delete(callback)
-  }
-
-  return { get, set, subscribe }
+// Replace custom store with Zustand store
+interface Store {
+  room: Room<Schema> | undefined
+  state: Schema | undefined
+  setRoom: (room: Room<Schema>) => void
+  setState: (state: Schema) => void
 }
+
+export const store = createStore<Store>((set) => ({
+  room: undefined as Room<Schema> | undefined,
+  state: undefined as Schema | undefined,
+  setRoom: (room: Room<Schema>) => set({ room }),
+  setState: (state: Schema) => set({ state }),
+}))
+
+const { getState, setState, subscribe, getInitialState } = store
+
+export const useBoundStore = (selector) => useStore(store, selector)
 
 const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]) => S) => {
   const client = new Client(endpoint)
 
-  const roomStore = store<Room<S> | undefined>(undefined)
-  const stateStore = store<S | undefined>(undefined)
+  // Use Zustand store
+  const roomStore = getState().room
+  const stateStore = getState().state
 
   let connecting = false
 
   const connectToColyseus = async (roomName: string, options = {}) => {
-    if (connecting || roomStore.get()) return
+    if (connecting || roomStore) return
 
     connecting = true
 
@@ -43,8 +47,7 @@ const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]
         room = await client.joinOrCreate<S>(roomName, options, schema)
       }
 
-      roomStore.set(room)
-      stateStore.set(room.state)
+      setState({ room, state: room.state })
 
       const updatedCollectionsMap: { [key in keyof S]?: boolean } = {}
 
@@ -66,7 +69,6 @@ const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]
 
       room.onStateChange((state) => {
         if (!state) return
-        console.log('sth changed', state)
         const copy = { ...state }
 
         for (const [key, update] of Object.entries(updatedCollectionsMap)) {
@@ -82,9 +84,7 @@ const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]
           }
         }
 
-        console.log('copy', copy)
-
-        stateStore.set(copy)
+        setState({ state: copy }) // Update stateStore
       })
 
       console.log(`Succesfully connected to Colyseus room ${roomName} at ${endpoint}`)
@@ -97,11 +97,10 @@ const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]
   }
 
   const disconnectFromColyseus = async () => {
-    const room = roomStore.get()
+    const room = roomStore
     if (!room) return
 
-    roomStore.set(undefined)
-    stateStore.set(undefined)
+    setState({ room: undefined, state: undefined })
 
     try {
       await room.leave()
@@ -110,29 +109,17 @@ const colyseus = <S = Schema>(endpoint: string, schema?: new (...args: unknown[]
   }
 
   const useColyseusRoom = () => {
-    const subscribe = (callback: () => void) => roomStore.subscribe(() => callback())
-
-    const getSnapshot = () => {
-      const colyseus = roomStore.get()
-      return colyseus
-    }
-
+    const subscribe = (callback: () => void) => store.subscribe(() => callback())
+    const getSnapshot = () => roomStore
     return useSyncExternalStore(subscribe, getSnapshot)
   }
 
-  function useColyseusState(): S | undefined
-  function useColyseusState<T extends (state: S) => unknown>(selector: T): ReturnType<T> | undefined
-  function useColyseusState<T extends (state: S) => unknown>(selector?: T) {
-    const subscribe = (callback: () => void) =>
-      stateStore.subscribe(() => {
-        callback()
-      })
-
+  const useColyseusState = <T extends (state: S) => unknown>(selector?: T) => {
+    const subscribe = (callback: () => void) => store.subscribe(() => callback())
     const getSnapshot = () => {
-      const state = stateStore.get()
+      const state = stateStore
       return state && selector ? selector(state) : state
     }
-
     return useSyncExternalStore(subscribe, getSnapshot)
   }
 
