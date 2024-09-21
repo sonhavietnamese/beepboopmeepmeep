@@ -5,6 +5,8 @@ export default function LobbyHud() {
   const room = useNetworkStore((state) => state.room)
   const state = useNetworkStore((state) => state.state)
 
+  if (!room) return null
+
   const isHost = state?.aliens.get(room?.sessionId)?.isHost
 
   const switchClass = (c: AlienRole) => {
@@ -18,8 +20,8 @@ export default function LobbyHud() {
   }
 
   return (
-    <main className='absolute inset-0 w-screen h-screen z-10'>
-      <section className='bottom-0 flex justify-center absolute w-full'>
+    <main className='absolute pointer-events-none inset-0 w-screen h-screen z-10 font-alien'>
+      <section className='bottom-0 flex justify-center absolute w-full pointer-events-auto'>
         <ul className='flex gap-2'>
           <li>
             <button className='w-[200px] h-[40px] bg-green-400' onClick={() => switchClass(AlienRole.WARRIOR)}>
@@ -39,7 +41,7 @@ export default function LobbyHud() {
 
           {isHost && (
             <li>
-              <button className='w-[200px] h-[40px] bg-green-400' onClick={startGame}>
+              <button className='w-[200px] font-alien h-[40px] bg-green-400' onClick={startGame}>
                 START GAME
               </button>
             </li>

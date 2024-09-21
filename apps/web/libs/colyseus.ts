@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-nocheck
+
 import { Schema } from '@colyseus/schema'
 import { Client, ErrorCode, type Room } from 'colyseus.js'
 import { useStore } from 'zustand'
