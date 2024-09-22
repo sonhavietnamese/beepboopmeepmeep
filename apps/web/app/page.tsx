@@ -1,8 +1,6 @@
 'use client'
 
-import { useNetworkStore } from '@/stores/network'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
   // const createRoom = useNetworkStore((s) => s.createRoom)

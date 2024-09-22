@@ -58,7 +58,7 @@ export default function Lobby() {
         Array.from(aliens.keys()).map((sessionId, index) => (
           <mesh castShadow receiveShadow key={sessionId} position={[index * 2, player.player, 0]}>
             <boxGeometry args={[1, 5, 1]} />
-            <meshStandardMaterial color={COLORS[aliens.get(sessionId)?.role ?? AlienRole.WARRIOR]} />
+            <meshStandardMaterial color={COLORS[aliens.get(sessionId)?.role as AlienRole] ?? COLORS[AlienRole.WARRIOR]} />
           </mesh>
         ))}
     </Suspense>

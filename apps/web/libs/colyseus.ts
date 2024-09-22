@@ -1,11 +1,8 @@
-// @ts-ignore
-// @ts-nocheck
-
 import { Schema } from '@colyseus/schema'
 import { Client, ErrorCode, type Room } from 'colyseus.js'
 import { useStore } from 'zustand'
 import { createStore, StoreApi } from 'zustand/vanilla'
-import { PlanetState } from '../../server/src/rooms/schema/planet-state'
+import PlanetState from '@/schemas/PlanetState'
 
 interface StoreState {
   room: Room<PlanetState> | undefined
