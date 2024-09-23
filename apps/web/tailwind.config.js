@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         alien: ['var(--font-alien)'],
+        seurat: ['var(--font-seurat)'],
       },
     },
   },
