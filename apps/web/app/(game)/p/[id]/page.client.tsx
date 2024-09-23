@@ -1,11 +1,10 @@
 'use client'
 
-import atlas from '@/assets/atlas.json'
+import atlas from '@/assets/atlas-clean.json'
 import uiSpritesheet from '@/assets/ui.png'
 import { CAMERA_CONFIG } from '@/configs/game'
 import LobbyHud from '@/huds/lobby'
 import { connectToColyseus, disconnectFromColyseus } from '@/libs/colyseus'
-import Lobby from '@/scenes/lobby'
 import { useSpritesheet } from '@/stores/spritesheet'
 import { Canvas } from '@react-three/fiber'
 import { useParams } from 'next/navigation'
@@ -21,6 +20,8 @@ async function preload() {
       alias: 'ui-spritesheet',
       src: uiSpritesheet,
     },
+    { alias: 'Seurat', src: '/fonts/FOT-Seurat Pro B.otf', data: { family: 'Seurat' } },
+    { alias: 'Infinegarian', src: '/fonts/FOT-Seurat Pro B.otf', data: { family: 'Infinegarian' } },
   ]
 
   await Assets.load(assets)
@@ -54,9 +55,9 @@ export default function PageClient() {
           position: [0, 10, 20],
         }}>
         {/* <Physics debug={true}> */}
-        <Perf position='top-left' />
+        <Perf position='bottom-left' />
 
-        <Lobby />
+        {/* <Lobby /> */}
         {/* </Physics> */}
       </Canvas>
     </main>
