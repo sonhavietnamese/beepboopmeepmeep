@@ -1,6 +1,6 @@
 import { useSpritesheet } from '@/stores/spritesheet'
 import { useApp } from '@pixi/react'
-import { Container, Sprite, Texture, TilingSprite } from 'pixi.js'
+import { Container, Sprite, Text, Texture, TilingSprite } from 'pixi.js'
 import { useEffect } from 'react'
 
 export default function AlienSelectionCard() {
@@ -10,43 +10,69 @@ export default function AlienSelectionCard() {
   if (!spritesheet) return null
 
   useEffect(() => {
-    const container = new Container()
-    container.scale.set(1)
-    app.stage.addChild(container)
+    const group = new Container()
 
-    const mask = new Sprite(Texture.from('alien-selection-card'))
-    container.mask = mask
+    group.width = app.screen.width
+    group.pivot.set(0.5)
 
-    const sprite = new Sprite(Texture.from('alien-selection-card'))
-    container.addChild(sprite)
-    sprite.position.set(0, 0)
+    group.position.set(app.screen.width / 2, app.screen.height / 2)
 
-    container.addChild(mask)
+    const cards: Container[] = [new Container(), new Container(), new Container()]
 
-    const tilingSprite = new TilingSprite(Texture.from('tile-01'))
-    tilingSprite.visible = false
-    tilingSprite.scale.set(2)
-    container.addChild(tilingSprite)
-    tilingSprite.width = container.width
-    tilingSprite.height = container.height
-    tilingSprite.position.set(0, 0)
+    if (!cards[0]) return
+    if (!cards[1]) return
+    if (!cards[2]) return
 
-    container.interactive = true
-    container.on('pointerover', () => {
-      tilingSprite.visible = true
-      sprite.visible = false
-    })
-    container.on('pointerout', () => {
+    cards.forEach((card, i) => {
+      card.scale.set(0.5)
+      const mask = new Sprite(Texture.from('alien-selection-card'))
+      card.mask = mask
+
+      const sprite = new Sprite(Texture.from('alien-selection-card'))
+      card.addChild(sprite)
+      sprite.position.set(0, 0)
+
+      card.addChild(mask)
+
+      const tilingSprite = new TilingSprite(Texture.from('tile-01'))
       tilingSprite.visible = false
-      sprite.visible = true
+      tilingSprite.scale.set(2)
+      card.addChild(tilingSprite)
+      tilingSprite.width = card.width
+      tilingSprite.height = card.height
+      tilingSprite.position.set(0, 0)
+
+      const frame = new Sprite(Texture.from('alien-avatar-placeholder'))
+      card.addChild(frame)
+      frame.position.set(52, 36)
+
+      const alien = new Text('Alien', {
+        fontFamily: 'Seurat',
+        fontSize: 24,
+        fill: 0xffffff,
+      })
+      card.addChild(alien)
+      alien.position.set(52, 36)
+
+      card.interactive = true
+      card.on('pointerover', () => {
+        tilingSprite.visible = true
+        sprite.visible = false
+      })
+      card.on('pointerout', () => {
+        tilingSprite.visible = false
+        sprite.visible = true
+      })
+
+      card.position.set(10 + card.width * i, 10)
+
+      group.addChild(card)
     })
 
-    app.ticker.add(() => {
-      tilingSprite.tilePosition.x += 1
-    })
+    app.stage.addChild(group)
 
     return () => {
-      app.stage.removeChild(container)
+      app.stage.removeChild(group)
     }
   }, [app.stage])
 

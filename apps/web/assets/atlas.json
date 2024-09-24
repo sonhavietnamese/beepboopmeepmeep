@@ -1,8 +1,16 @@
 {"frames": {
 
+"alien-avatar-placeholder.png":
+{
+	"frame": {"x":176,"y":0,"w":257,"h":257},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":257,"h":257},
+	"sourceSize": {"w":257,"h":257}
+},
 "alien-selection-card.svg":
 {
-	"frame": {"x":0,"y":80,"w":361,"h":369},
+	"frame": {"x":0,"y":257,"w":361,"h":369},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":361,"h":369},
@@ -69,8 +77,8 @@
 	"version": "1.0",
 	"image": "ui.png",
 	"format": "RGBA8888",
-	"size": {"w":361,"h":449},
+	"size": {"w":433,"h":626},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:8909acd4f190140e3c99adb0c6181b5d:d35abc65da50e980cb4186073aca33e1:01ceaa0c770ff0a7cd032a2bb83b8833$"
+	"smartupdate": "$TexturePacker:SmartUpdate:d07392eebae02552944ea8ee415f2256:635cdc9a30e4b11427441ea1e5c7e65e:01ceaa0c770ff0a7cd032a2bb83b8833$"
 }
 }
