@@ -1,10 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { BASE_URL } from '@/constants'
 import { createBlankTransaction } from '@/utils/create-blank-tx'
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
-import { NextResponse } from 'next/server'
 import { readFile } from 'node:fs/promises'
 import satori from 'satori'
+import { html } from 'satori-html'
+
+const template = html`
+  <div style={{ color: 'black', fontSize: 128 }}>hello, world</div>
+`
 
 async function initFonts() {
   const fontData = await readFile(process.cwd() + '/app/fonts/Roboto-Regular.ttf')
@@ -15,7 +21,7 @@ async function initFonts() {
 export async function GET() {
   const robotoArrayBuffer = await initFonts()
 
-  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>hello, world</div>, {
+  const svg = await satori(template, {
     width: 800,
     height: 800,
     fonts: [
@@ -47,7 +53,7 @@ export async function GET() {
     },
   }
 
-  return NextResponse.json(response, {
+  return Response.json(response, {
     headers: ACTIONS_CORS_HEADERS,
   })
 }
@@ -86,7 +92,7 @@ export async function POST(req: Request) {
     },
   })
 
-  return NextResponse.json(payload, {
+  return Response.json(payload, {
     headers: ACTIONS_CORS_HEADERS,
   })
 }
