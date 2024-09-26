@@ -1,49 +1,9 @@
-import { ActionGetResponse, ACTIONS_CORS_HEADERS } from '@solana/actions'
+import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 import satori from 'satori'
+import { PublicKey } from '@solana/web3.js'
+import { createBlankTransaction } from '@/utils/create-blank-tx'
 
 export const runtime = 'edge'
-// async function initFonts() {
-//   const fontData = await readFile('./Roboto-Regular.ttf')
-
-//   return fontData
-// }
-
-// export async function POST(req: Request) {
-//   const body = (await req.json()) as { account: string; signature: string }
-//   const sender = new PublicKey(body.account)
-
-//   const transaction = await createBlankTransaction(sender)
-
-//   const payload = await createPostResponse({
-//     fields: {
-//       links: {
-//         next: {
-//           type: 'inline',
-//           action: {
-//             description: ``,
-//             icon: `${BASE_URL}/tutorial.png`,
-//             label: ``,
-//             title: `Hoppin | Tutorial`,
-//             type: 'action',
-//             links: {
-//               actions: [
-//                 {
-//                   label: `Hop in`,
-//                   href: `/api/action?stage=start&step=0`,
-//                 },
-//               ],
-//             },
-//           },
-//         },
-//       },
-//       transaction: transaction,
-//     },
-//   })
-
-//   return Response.json(payload, {
-//     headers: ACTIONS_CORS_HEADERS,
-//   })
-// }
 
 const fontCache = new Map<string, ArrayBuffer>()
 
@@ -64,6 +24,57 @@ const loadFont = async (fontName: Font) => {
   const font = await fetch(url).then((response) => response.arrayBuffer())
   fontCache.set(fontName, font)
   return font
+}
+
+export async function POST(req: Request) {
+  const body = (await req.json()) as { account: string; signature: string }
+  const sender = new PublicKey(body.account)
+
+  const transaction = await createBlankTransaction(sender)
+
+  const roboto = await loadFont(Font.ROBOTO_REGULAR)
+
+  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>wau, world</div>, {
+    width: 800,
+    height: 800,
+    embedFont: false,
+    fonts: [
+      {
+        name: 'Roboto',
+        data: roboto,
+      },
+    ],
+  })
+
+  const payload = await createPostResponse({
+    fields: {
+      links: {
+        next: {
+          type: 'inline',
+          action: {
+            description: ``,
+            icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
+            label: ``,
+            title: `Hoppin | Tutorial`,
+            type: 'action',
+            links: {
+              actions: [
+                {
+                  label: `Hop in`,
+                  href: `/api/action?stage=start&step=0`,
+                },
+              ],
+            },
+          },
+        },
+      },
+      transaction: transaction,
+    },
+  })
+
+  return Response.json(payload, {
+    headers: ACTIONS_CORS_HEADERS,
+  })
 }
 
 export async function GET() {
