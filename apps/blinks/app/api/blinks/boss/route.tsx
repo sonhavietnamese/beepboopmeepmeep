@@ -7,7 +7,7 @@ import { readFile } from 'node:fs/promises'
 import satori from 'satori'
 
 async function initFonts() {
-  const fontData = await readFile(process.cwd() + 'assets/Roboto-Regular.ttf')
+  const fontData = await readFile(process.cwd() + '/app/fonts/Roboto-Regular.ttf')
 
   return fontData
 }
