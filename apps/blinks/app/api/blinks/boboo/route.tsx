@@ -33,19 +33,19 @@ export async function POST(req: Request) {
 
   const transaction = await createBlankTransaction(sender)
 
-  // const roboto = await loadFont(Font.ROBOTO_REGULAR)
+  const roboto = await loadFont(Font.ROBOTO_REGULAR)
 
-  // const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>wau, world</div>, {
-  //   width: 800,
-  //   height: 800,
-  //   embedFont: false,
-  //   fonts: [
-  //     {
-  //       name: 'Roboto',
-  //       data: roboto,
-  //     },
-  //   ],
-  // })
+  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>wau, world</div>, {
+    width: 800,
+    height: 800,
+    embedFont: false,
+    fonts: [
+      {
+        name: 'Roboto',
+        data: roboto,
+      },
+    ],
+  })
 
   const payload = await createPostResponse({
     fields: {
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
           type: 'inline',
           action: {
             description: ``,
-            icon: `data:image/svg+xml;base64,`,
+            icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
             label: ``,
             title: `Hoppin | Tutorial`,
             type: 'action',

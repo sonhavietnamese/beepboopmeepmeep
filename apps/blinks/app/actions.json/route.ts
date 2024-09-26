@@ -7,6 +7,10 @@ export const GET = async () => {
         pathPattern: '/blinks/boss',
         apiPath: '/api/blinks/boss',
       },
+      {
+        pathPattern: '/blinks/forge',
+        apiPath: '/api/blinks/forge',
+      },
     ],
   }
 
