@@ -4,12 +4,10 @@ import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@so
 import { PublicKey } from '@solana/web3.js'
 import { NextResponse } from 'next/server'
 import { readFile } from 'node:fs/promises'
-import { join } from 'path'
 import satori from 'satori'
 
 async function initFonts() {
-  const fontPath = join(process.cwd(), 'assets/Roboto-Regular.ttf')
-  const fontData = await readFile(fontPath)
+  const fontData = await readFile(process.cwd() + 'assets/Roboto-Regular.ttf')
 
   return fontData
 }
