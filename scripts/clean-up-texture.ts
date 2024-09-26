@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const texturesDir = path.join('assets/Textures')
+const texturesDir = path.join('apps/blinks/public/right')
 
 function cleanUpTextures(dir) {
   fs.readdir(dir, { withFileTypes: true }, (err, files) => {
@@ -25,7 +25,7 @@ function cleanUpTextures(dir) {
             }
           })
         } else {
-          const newFileName = file.name.toLowerCase().replace(/\s+/g, '-')
+          const newFileName = file.name.toLowerCase().replace(/\s+/g, '-').replace(/_/g, '-')
           const newFilePath = path.join(dir, newFileName)
 
           if (newFilePath !== filePath) {
