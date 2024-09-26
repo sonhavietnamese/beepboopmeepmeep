@@ -2,6 +2,7 @@
 // import { createBlankTransaction } from '@/utils/create-blank-tx'
 // import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 // import { PublicKey } from '@solana/web3.js'
+import { ActionGetResponse, ACTIONS_CORS_HEADERS } from '@solana/actions'
 // import { readFile } from 'node:fs/promises'
 // import satori from 'satori'
 // import { html } from 'satori-html'
@@ -96,8 +97,29 @@
 // }
 
 export function GET() {
-  return Response.json({
-    message: 'Hello, World!',
+  const response: ActionGetResponse = {
+    type: 'action',
+    icon: `data:image/svg+xml;base64`,
+    // icon: `data:image/svg+xml;base64,`,
+    title: 'Hoppin',
+    description: 'Hop through holes and collect $SEND',
+    label: '',
+    links: {
+      actions: [
+        {
+          label: 'Start',
+          href: '/api/action?stage=start&step=0',
+        },
+        {
+          label: 'Tutorial',
+          href: '/api/action?stage=tutorial',
+        },
+      ],
+    },
+  }
+
+  return Response.json(response, {
+    headers: ACTIONS_CORS_HEADERS,
   })
 }
 
