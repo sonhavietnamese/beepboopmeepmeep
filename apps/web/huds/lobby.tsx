@@ -34,29 +34,3 @@ export default function LobbyHud() {
     </Stage>
   )
 }
-
-{
-  /* <Container>
-        {spritesheet && (
-          <NineSlicePlane
-            eventMode='static'
-            anchor={[200, 100]}
-            pivot={[200, 100]}
-            leftWidth={73}
-            topHeight={0}
-            rightWidth={22}
-            bottomHeight={0}
-            width={400}
-            height={300}
-            x={250}
-            onpointerdown={() => {
-              console.log('clicked')
-            }}
-            y={120}
-            texture={spritesheet.textures['ui-name-tag.png']}
-          />
-        )}
-
-        <Sprite texture={spritesheet.textures['alien-selection-card']} />
-      </Container> */
-}

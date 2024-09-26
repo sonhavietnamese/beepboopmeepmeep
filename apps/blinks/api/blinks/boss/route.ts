@@ -30,16 +30,6 @@ export async function GET(req: Request) {
   })
 }
 
-const DATA: Record<string, { currentHoles: number[][]; generatedHoles: number[][]; step: number; isWin: boolean }> = {
-  dummy: {
-    currentHoles: [],
-    generatedHoles: [],
-    step: 0,
-    isWin: false,
-  },
-}
-
-// ensures cors
 export const OPTIONS = GET
 
 export async function POST(req: Request) {

@@ -2,17 +2,16 @@
 
 import atlas from '@/assets/atlas-clean.json'
 import uiSpritesheet from '@/assets/ui.png'
+import { Butterfly } from '@/components/butterfly'
 import { CAMERA_CONFIG } from '@/configs/game'
-import LobbyHud from '@/huds/lobby'
 import { connectToColyseus, disconnectFromColyseus } from '@/libs/colyseus'
 import { useSpritesheet } from '@/stores/spritesheet'
+import '@pixi/events'
 import { Canvas } from '@react-three/fiber'
 import { useParams } from 'next/navigation'
 import { Assets, Spritesheet, Texture } from 'pixi.js'
 import { Perf } from 'r3f-perf'
 import { useEffect } from 'react'
-
-import '@pixi/events'
 
 async function preload() {
   const assets = [
@@ -47,7 +46,7 @@ export default function PageClient() {
 
   return (
     <main className='relative w-screen overflow-hidden h-screen bg-black'>
-      <LobbyHud />
+      {/* <LobbyHud /> */}
       <Canvas
         shadows
         camera={{
@@ -56,6 +55,8 @@ export default function PageClient() {
         }}>
         {/* <Physics debug={true}> */}
         <Perf position='bottom-left' />
+        <ambientLight intensity={2} />
+        <Butterfly />
 
         {/* <Lobby /> */}
         {/* </Physics> */}
