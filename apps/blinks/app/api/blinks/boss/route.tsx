@@ -3,32 +3,33 @@ import { createBlankTransaction } from '@/utils/create-blank-tx'
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
 import { NextResponse } from 'next/server'
-import { readFile } from 'node:fs/promises'
-import satori from 'satori'
+// import { readFile } from 'node:fs/promises'
+// import satori from 'satori'
 
-async function initFonts() {
-  const fontData = await readFile(process.cwd() + '/app/fonts/Roboto-Regular.ttf')
+// async function initFonts() {
+//   const fontData = await readFile(process.cwd() + '/app/fonts/Roboto-Regular.ttf')
 
-  return fontData
-}
+//   return fontData
+// }
 
 export async function GET() {
-  const robotoArrayBuffer = await initFonts()
+  // const robotoArrayBuffer = await initFonts()
 
-  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>hello, world</div>, {
-    width: 800,
-    height: 800,
-    fonts: [
-      {
-        name: 'Roboto',
-        data: robotoArrayBuffer,
-      },
-    ],
-  })
+  // const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>hello, world</div>, {
+  //   width: 800,
+  //   height: 800,
+  //   fonts: [
+  //     {
+  //       name: 'Roboto',
+  //       data: robotoArrayBuffer,
+  //     },
+  //   ],
+  // })
 
   const response: ActionGetResponse = {
     type: 'action',
-    icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
+    // icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
+    icon: `data:image/svg+xml;base64,`,
     title: 'Hoppin',
     description: 'Hop through holes and collect $SEND',
     label: '',
