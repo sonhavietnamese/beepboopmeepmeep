@@ -17,7 +17,7 @@ const template = html`
 `
 
 async function initFonts() {
-  const fontData = await readFile(process.cwd() + '/app/fonts/Roboto-Regular.ttf')
+  const fontData = await readFile(process.cwd() + './assets/Roboto-Regular.ttf')
 
   return fontData
 }
