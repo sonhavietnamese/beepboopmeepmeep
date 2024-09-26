@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "@solana/actions": "^1.6.4",
+    "@solana/actions": "1.6.2",
     "next": "14.2.13",
     "react-dom": "^18",
     "satori": "^0.11.1",

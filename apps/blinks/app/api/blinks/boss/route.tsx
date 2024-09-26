@@ -1,11 +1,7 @@
-import {
-  ActionGetResponse,
-  ACTIONS_CORS_HEADERS,
-  //  createPostResponse
-} from '@solana/actions'
+import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 import satori from 'satori'
-// import { PublicKey } from '@solana/web3.js'
-// import { createBlankTransaction } from '@/utils/create-blank-tx'
+import { PublicKey } from '@solana/web3.js'
+import { createBlankTransaction } from '@/utils/create-blank-tx'
 
 export const runtime = 'edge'
 
@@ -30,12 +26,12 @@ const loadFont = async (fontName: Font) => {
   return font
 }
 
-export async function POST() {
-// req: Request
-  // const body = (await req.json()) as { account: string; signature: string }
-  // const sender = new PublicKey(body.account)
+export async function POST(req: Request) {
+  // req: Request
+  const body = (await req.json()) as { account: string; signature: string }
+  const sender = new PublicKey(body.account)
 
-  // const transaction = await createBlankTransaction(sender)
+  const transaction = await createBlankTransaction(sender)
 
   // const roboto = await loadFont(Font.ROBOTO_REGULAR)
 
@@ -51,35 +47,31 @@ export async function POST() {
   //   ],
   // })
 
-  // const payload = await createPostResponse({
-  //   fields: {
-  //     links: {
-  //       next: {
-  //         type: 'inline',
-  //         action: {
-  //           description: ``,
-  //           icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
-  //           label: ``,
-  //           title: `Hoppin | Tutorial`,
-  //           type: 'action',
-  //           links: {
-  //             actions: [
-  //               {
-  //                 label: `Hop in`,
-  //                 href: `/api/action?stage=start&step=0`,
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       },
-  //     },
-  //     transaction: transaction,
-  //   },
-  // })
-
-  const payload = {
-    type: 'action',
-  }
+  const payload = await createPostResponse({
+    fields: {
+      links: {
+        next: {
+          type: 'inline',
+          action: {
+            description: ``,
+            icon: `data:image/svg+xml;base64,`,
+            label: ``,
+            title: `Hoppin | Tutorial`,
+            type: 'action',
+            links: {
+              actions: [
+                {
+                  label: `Hop in`,
+                  href: `/api/action?stage=start&step=0`,
+                },
+              ],
+            },
+          },
+        },
+      },
+      transaction: transaction,
+    },
+  })
 
   return Response.json(payload, {
     headers: ACTIONS_CORS_HEADERS,
