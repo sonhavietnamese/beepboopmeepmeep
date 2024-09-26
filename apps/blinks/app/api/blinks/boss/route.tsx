@@ -3,11 +3,34 @@ import { createBlankTransaction } from '@/utils/create-blank-tx'
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
 import { PublicKey } from '@solana/web3.js'
 import { NextResponse } from 'next/server'
+import { readFile } from 'node:fs/promises'
+import { join } from 'path'
+import satori from 'satori'
 
-export async function GET(req: Request) {
+async function initFonts() {
+  const fontPath = join(process.cwd(), 'assets/Roboto-Regular.ttf')
+  const fontData = await readFile(fontPath)
+
+  return fontData
+}
+
+export async function GET() {
+  const robotoArrayBuffer = await initFonts()
+
+  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>hello, world</div>, {
+    width: 800,
+    height: 800,
+    fonts: [
+      {
+        name: 'Roboto',
+        data: robotoArrayBuffer,
+      },
+    ],
+  })
+
   const response: ActionGetResponse = {
     type: 'action',
-    icon: `${BASE_URL}/thumbnail.png`,
+    icon: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
     title: 'Hoppin',
     description: 'Hop through holes and collect $SEND',
     label: '',
