@@ -12,3 +12,8 @@ export enum Font {
 export const FONT_MAP: Record<Font, string> = {
   [Font.ROBOTO_REGULAR]: new URL('./assets/Roboto-Regular.ttf', import.meta.url).toString(),
 }
+
+export const CONFIG = {
+  IMAGE_WIDTH: 800,
+  IMAGE_HEIGHT: 800,
+}
