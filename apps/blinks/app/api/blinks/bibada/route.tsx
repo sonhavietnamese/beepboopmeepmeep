@@ -12,13 +12,8 @@ export async function GET() {
 
   const svg = await satori(
     <div tw='flex flex-col w-full h-full items-center justify-center'>
-      <img src={`http://localhost:3501/bg/bg.png`} width={CONFIG.IMAGE_WIDTH} height={CONFIG.IMAGE_HEIGHT} tw='w-full h-full absolute' />
-      <img
-        src={`http://localhost:3501/boss/compressed-minotos-00.png`}
-        width={CONFIG.IMAGE_WIDTH}
-        height={CONFIG.IMAGE_HEIGHT}
-        tw='w-full h-full absolute'
-      />
+      <img src={`${BASE_URL}/bg/bg.png`} width={CONFIG.IMAGE_WIDTH} height={CONFIG.IMAGE_HEIGHT} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/boss/compressed-minotos-00.png`} width={CONFIG.IMAGE_WIDTH} height={CONFIG.IMAGE_HEIGHT} tw='w-full h-full absolute' />
     </div>,
     {
       width: 800,
