@@ -7,10 +7,12 @@ export const fontCache = new Map<string, ArrayBuffer>()
 
 export enum Font {
   ROBOTO_REGULAR = 'Roboto-Regular',
+  BACKBEAT = 'CCBackBeatRegular',
 }
 
 export const FONT_MAP: Record<Font, string> = {
   [Font.ROBOTO_REGULAR]: new URL('./assets/Roboto-Regular.ttf', import.meta.url).toString(),
+  [Font.BACKBEAT]: new URL('./assets/CCBackBeatRegular.ttf', import.meta.url).toString(),
 }
 
 export const CONFIG = {
