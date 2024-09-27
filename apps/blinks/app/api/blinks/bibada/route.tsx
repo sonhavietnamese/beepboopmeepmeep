@@ -122,7 +122,7 @@ export async function POST(req: Request) {
 
         <div tw='flex flex-col w-[250px] absolute gap-12 top-[75px] items-center pl-12 pr-9 justify-center z-10'>
           {Array.from({ length: 3 }).map((_, index) => (
-            <div tw='flex items-center justify-between w-full mt-[3px]'>
+            <div key={index} tw='flex items-center justify-between w-full mt-[3px]'>
               <span tw='text-white text-[22px] font-backbeat'>{trimWallet('GiytdaunbYyLB7Vmsr1aXgvhCwj4hN2B5v1h8fFELr5v')}</span>
               <span tw='text-white text-[22px] font-backbeat'>1k</span>
             </div>
