@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import sharp from 'sharp'
 
-const imagesDir = path.join('apps/blinks/public')
+const imagesDir = path.join('apps/blinks/public/boss')
 
 async function compressAndResizeImages(dir) {
   fs.readdir(dir, { withFileTypes: true }, async (err, files) => {
@@ -15,7 +15,7 @@ async function compressAndResizeImages(dir) {
       const filePath = path.join(dir, file.name)
 
       if (file.isDirectory()) {
-        await compressAndResizeImages(filePath) // Recursively process nested directories
+        await compressAndResizeImages(filePath)
       } else if (file.name.endsWith('.png')) {
         const outputFilePath = path.join(dir, `compressed-${file.name}`)
         try {

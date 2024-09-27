@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const texturesDir = path.join('apps/blinks/public/right')
+const texturesDir = path.join('apps/blinks/public/boss')
 
 function cleanUpTextures(dir) {
   fs.readdir(dir, { withFileTypes: true }, (err, files) => {

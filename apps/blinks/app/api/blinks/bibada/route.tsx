@@ -10,17 +10,22 @@ export const runtime = 'edge'
 export async function GET() {
   const roboto = await loadFont(Font.ROBOTO_REGULAR)
 
-  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>hello, world</div>, {
-    width: 800,
-    height: 800,
-    embedFont: false,
-    fonts: [
-      {
-        name: 'Roboto',
-        data: roboto,
-      },
-    ],
-  })
+  const svg = await satori(
+    <div tw='flex flex-col w-full h-full items-center justify-center'>
+      <img src={`http://localhost:3501/bg/bg.png`} tw='w-full h-full absolute' />
+      <img src={`http://localhost:3501/boss/compressed-minotos-00.png`} tw='w-full h-full absolute' />
+    </div>,
+    {
+      width: 800,
+      height: 800,
+      fonts: [
+        {
+          name: 'Roboto',
+          data: roboto,
+        },
+      ],
+    },
+  )
 
   const response: ActionGetResponse = {
     type: 'action',
@@ -31,12 +36,14 @@ export async function GET() {
     links: {
       actions: [
         {
+          type: 'post',
           label: 'Start',
-          href: '/api/action?stage=start&step=0',
+          href: '/api/blinks/bibada?stage=start&step=0',
         },
         {
+          type: 'post',
           label: 'Tutorial',
-          href: '/api/action?stage=tutorial',
+          href: '/api/blinks/bibada?stage=tutorial',
         },
       ],
     },
@@ -58,22 +65,32 @@ export async function POST(req: Request) {
 
   const roboto = await loadFont(Font.ROBOTO_REGULAR)
 
-  const svg = await satori(<div style={{ color: 'black', fontSize: 128 }}>wau, world</div>, {
-    width: 800,
-    height: 800,
-    embedFont: false,
-    fonts: [
-      {
-        name: 'Roboto',
-        data: roboto,
-      },
-    ],
-  })
+  const svg = await satori(
+    <div tw='flex flex-col w-full h-full items-center justify-center'>
+      <img src={`http://localhost:3501/bg/bg.png`} tw='w-full h-full absolute' />
+      <img src={`http://localhost:3501/boss/compressed-minotos-04.png`} tw='w-full h-full absolute' />
+      <img src={`http://localhost:3501/left/compressed-cute-butterfly-a.png`} tw='w-full h-full absolute' />
+      <img src={`http://localhost:3501/middle/compressed-cute-butterfly-b.png`} tw='w-full h-full absolute' />
+      <img src={`http://localhost:3501/right/compressed-cute-butterfly-a.png`} tw='w-full h-full absolute' />
+    </div>,
+    {
+      width: 800,
+      height: 800,
+      fonts: [
+        {
+          name: 'Roboto',
+          data: roboto,
+        },
+      ],
+    },
+  )
 
   const payload = await createPostResponse({
     fields: {
       links: {
         next: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           type: 'inline',
           action: {
             description: ``,
