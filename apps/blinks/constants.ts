@@ -1,7 +1,7 @@
 import { Connection } from '@solana/web3.js'
 
 export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL as string
-export const connection = new Connection(process.env.HELIUS_RPC_URL as string, 'confirmed')
+export const connection = new Connection('https://devnet.helius-rpc.com/?api-key=eadd6885-8c9c-4ccc-9063-43f1e7d6012d' as string, 'confirmed')
 
 export const fontCache = new Map<string, ArrayBuffer>()
 
