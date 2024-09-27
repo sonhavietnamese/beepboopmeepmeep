@@ -4,8 +4,8 @@ export const GET = async () => {
   const payload: ActionsJson = {
     rules: [
       {
-        pathPattern: '/blinks/boss',
-        apiPath: '/api/blinks/boss',
+        pathPattern: '/blinks/bibada',
+        apiPath: '/api/blinks/bibada',
       },
       {
         pathPattern: '/blinks/forge',
