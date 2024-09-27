@@ -1,4 +1,4 @@
-import { Font } from '@/constants'
+import { BASE_URL, Font } from '@/constants'
 import { createBlankTransaction } from '@/utils/create-blank-tx'
 import { loadFont } from '@/utils/load-font'
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
@@ -67,11 +67,11 @@ export async function POST(req: Request) {
 
   const svg = await satori(
     <div tw='flex flex-col w-full h-full items-center justify-center'>
-      <img src={`http://localhost:3501/bg/bg.png`} tw='w-full h-full absolute' />
-      <img src={`http://localhost:3501/boss/compressed-minotos-04.png`} tw='w-full h-full absolute' />
-      <img src={`http://localhost:3501/left/compressed-cute-butterfly-a.png`} tw='w-full h-full absolute' />
-      <img src={`http://localhost:3501/middle/compressed-cute-butterfly-b.png`} tw='w-full h-full absolute' />
-      <img src={`http://localhost:3501/right/compressed-cute-butterfly-a.png`} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/bg/bg.png`} width={800} height={800} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/boss/compressed-minotos-04.png`} width={800} height={800} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/left/compressed-cute-butterfly-a.png`} width={800} height={800} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/middle/compressed-cute-butterfly-b.png`} width={800} height={800} tw='w-full h-full absolute' />
+      <img src={`${BASE_URL}/right/compressed-cute-butterfly-a.png`} width={800} height={800} tw='w-full h-full absolute' />
     </div>,
     {
       width: 800,
