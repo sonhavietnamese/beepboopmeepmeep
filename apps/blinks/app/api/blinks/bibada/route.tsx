@@ -1,12 +1,21 @@
-import { BASE_URL, CONFIG, Font } from '@/constants'
+import { BASE_URL, BOSS_PUBLIC_KEY, CONFIG, connection, Font, MEEPMEEP_PROGRAM_ID, PROGRAM } from '@/constants'
+import MeepMeep from '@/idls/meepmeep.json'
 import { createBlankTransaction } from '@/utils/create-blank-tx'
+import { createDealDamageTx } from '@/utils/create-deal-damage-tx'
+import { fetchBossData } from '@/utils/fetch-boss-data'
 import { loadFont } from '@/utils/load-font'
 import { trimWallet } from '@/utils/trim-wallet'
 import { ActionGetResponse, ACTIONS_CORS_HEADERS, createPostResponse } from '@solana/actions'
-import { PublicKey } from '@solana/web3.js'
+import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+import BN from 'bn.js'
 import satori from 'satori'
 
 export const runtime = 'edge'
+
+const enum Action {
+  START = 'start',
+  DEAL_DAMAGE = 'deal-damage',
+}
 
 export async function GET() {
   const roboto = await loadFont(Font.BACKBEAT)
@@ -37,14 +46,9 @@ export async function GET() {
     links: {
       actions: [
         {
-          type: 'post',
           label: 'Start',
-          href: '/api/blinks/bibada?stage=start&step=0',
-        },
-        {
-          type: 'post',
-          label: 'Tutorial',
-          href: '/api/blinks/bibada?stage=tutorial',
+          href: `/api/blinks/bibada?action=${Action.START}`,
+          type: 'transaction',
         },
       ],
     },
@@ -58,11 +62,26 @@ export async function GET() {
 export const OPTIONS = GET
 
 export async function POST(req: Request) {
-  // req: Request
   const body = (await req.json()) as { account: string; signature: string }
-  const sender = new PublicKey(body.account)
+  const { searchParams } = new URL(req.url)
 
-  const transaction = await createBlankTransaction(sender)
+  const sender = new PublicKey(body.account)
+  const action = searchParams.get('action') as Action
+
+  // const boss = await fetchBossData()
+
+  let transaction = new Transaction()
+
+  switch (action) {
+    case Action.START:
+      transaction = await createBlankTransaction(sender)
+      break
+    case Action.DEAL_DAMAGE:
+      transaction = await createDealDamageTx(sender, 100)
+      break
+    default:
+      break
+  }
 
   const roboto = await loadFont(Font.ROBOTO_REGULAR)
 
@@ -120,7 +139,7 @@ export async function POST(req: Request) {
       <div tw='absolute top-0 left-0 w-[250px] h-[235px] flex flex-col items-center justify-center'>
         <img src={`${BASE_URL}/ui/rank-panel.png`} width={250} height={235} tw='w-full h-full' />
 
-        <div tw='flex flex-col w-[250px] absolute gap-12 top-[75px] items-center pl-12 pr-9 justify-center z-10'>
+        <div tw='flex flex-col w-[250px] absolute gap-12 top-[75px] items-center pl-12 pr-9 justify-center z-[10]'>
           {Array.from({ length: 3 }).map((_, index) => (
             <div key={index} tw='flex items-center justify-between w-full mt-[3px]'>
               <span tw='text-white text-[22px] font-backbeat'>{trimWallet('GiytdaunbYyLB7Vmsr1aXgvhCwj4hN2B5v1h8fFELr5v')}</span>
@@ -159,7 +178,7 @@ export async function POST(req: Request) {
               actions: [
                 {
                   label: `Hop in`,
-                  href: `/api/action?stage=start&step=0`,
+                  href: `/api/blinks/bibada?stage=start&step=0`,
                 },
               ],
             },

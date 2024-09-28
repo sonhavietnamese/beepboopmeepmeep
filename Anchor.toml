@@ -5,10 +5,10 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-meepmeep = "AamArorzVAsGS3b8vTtzbQDj9vLgTu2cvTYofxuV5EEt"
+meepmeep = "3CZyEWmVeZ962D1cxKdRHdZi1gU64T25xvxkd3xQdsDe"
 
 [programs.devnet]
-meepmeep = "AamArorzVAsGS3b8vTtzbQDj9vLgTu2cvTYofxuV5EEt"
+meepmeep = "3CZyEWmVeZ962D1cxKdRHdZi1gU64T25xvxkd3xQdsDe"
 
 [registry]
 url = "https://api.apr.dev"

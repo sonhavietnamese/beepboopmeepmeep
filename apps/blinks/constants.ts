@@ -1,7 +1,9 @@
-import { Connection } from '@solana/web3.js'
+import { Connection, PublicKey } from '@solana/web3.js'
+import { Idl, Program } from '@coral-xyz/anchor'
+import MeepMeep from '@/idls/meepmeep.json'
 
 export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL as string
-export const connection = new Connection('https://devnet.helius-rpc.com/?api-key=eadd6885-8c9c-4ccc-9063-43f1e7d6012d' as string, 'confirmed')
+export const connection = new Connection('https://api.devnet.solana.com', 'confirmed')
 
 export const fontCache = new Map<string, ArrayBuffer>()
 
@@ -19,3 +21,8 @@ export const CONFIG = {
   IMAGE_WIDTH: 800,
   IMAGE_HEIGHT: 800,
 }
+
+export const MEEPMEEP_PROGRAM_ID = new PublicKey(process.env.MEEPMEEP_PROGRAM_ID as string)
+export const BOSS_PUBLIC_KEY = new PublicKey(process.env.BOSS_PUBLIC_KEY as string)
+
+export const PROGRAM = new Program(MeepMeep as Idl, MEEPMEEP_PROGRAM_ID, { connection: connection })
