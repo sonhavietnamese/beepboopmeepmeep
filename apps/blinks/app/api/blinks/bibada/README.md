@@ -8,3 +8,5 @@ No body trust him
 he wants to let princess know
 Need to beat guardian to go to her room
 Battle start
+
+Server Boss
