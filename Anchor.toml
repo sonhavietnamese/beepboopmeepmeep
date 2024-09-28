@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-game = "FrtvVvyP7CfPzSgxkXNPKZPsHsYVjAprhk5WEZJFVQHH"
+meepmeep = "AamArorzVAsGS3b8vTtzbQDj9vLgTu2cvTYofxuV5EEt"
 
 [registry]
 url = "https://api.apr.dev"
